@@ -18,5 +18,19 @@ Pi zero is working as wifi router to provide internet for photon weather station
 the pi 3 B+ connect to uq wifi
 the pi is working as wifi router
 
-  
+3.number of ports required by each autossh
 
+autossh is been called by the following command:
+
+```bash
+AUTOSSH_DEBUG=7 autossh -M 20000 -f -o"ServerAliveInterval 6000" -o "ServerAliveCountMax 10" -o "ExitOnForwardFailure=yes" -i ~/.ssh/id_rsa_sftp_uqgec -N sftp@xxx.xx.xx.xx -R 2003:localhost:5901 -R 1992:localhost:22 -C  >>/home/pi/autossh_debug  
+```
+
+in the host, the following ports are used for stanwell. 20000,20001, 2003,1992
+
+so the next system should be configured as
+
+```bash
+AUTOSSH_DEBUG=7 autossh -M 20002 -f -o"ServerAliveInterval 6000" -o "ServerAliveCountMax 10" -o "ExitOnForwardFailure=yes" -i ~/.ssh/id_rsa_sftp_uqgec -N sftp@xxx.xx.xx.xx -R 2004:localhost:5901 -R 1993:localhost:22 -C  >>/home/pi/autossh_debug  
+```
+the following ports are used for stanwell. 20002,20003, 2004,1993
