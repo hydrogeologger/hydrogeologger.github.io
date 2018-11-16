@@ -10,9 +10,14 @@ pins are found at the middle of the RJ21 pins.
 
    
 
-1. windows 10  is chopping
+2. windows 10  is chopping
 
    b for spark fun weather station. the innter two pins (in the middle) is for wind speed (yellow and red in the last terminal to logger), the greater the wind is, the higher the resistance is.
 the outer two pins are for wind direction. (black and green)  see manual for detail
    c.for Davis, the innter two pins are for wind direction
 
+3. Photon particle + sparkfun photon weather shield
+   when photon weather connected to internet:
+   
+   power 5.01v
+   current 0.102A
