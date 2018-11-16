@@ -18,7 +18,25 @@ Pi zero is working as wifi router to provide internet for photon weather station
 the pi 3 B+ connect to uq wifi
 the pi is working as wifi router
 
-3.number of ports required by each autossh
+3. hydrogeologgermini (deployed in gelita)
+
+```bash
+   ssh pi@localhost -p 20007
+```
+
+Telstra 3g usb modem is used to provide internet
+Pi zero is working as wifi router
+
+4. hydrogeologgermini (deployed in gelita) 
+
+```bash
+   ssh pi@localhost -p 20003
+```
+Autossh is setup in Ximing's mango
+Telstra 3g usb modem is used to provide internet
+Pi zero is working as wifi router to provide internet to photon weather station
+
+5.number of ports required by each autossh
 
 autossh is been called by the following command:
 
