@@ -52,3 +52,26 @@ so the next system should be configured as
 AUTOSSH_DEBUG=7 autossh -M 20002 -f -o"ServerAliveInterval 6000" -o "ServerAliveCountMax 10" -o "ExitOnForwardFailure=yes" -i ~/.ssh/id_rsa_sftp_uqgec -N sftp@xxx.xx.xx.xx -R 2004:localhost:5901 -R 1993:localhost:22 -C  >>/home/pi/autossh_debug  
 ```
 the following ports are used for stanwell. 20002,20003, 2004,1993
+
+5. pi@grange1 (grange_type_b)
+
+```bash
+   ssh pi@localhost -p 20001
+```
+
+6. pi@grange2 (grange_type_a & grange_type_D)
+
+```bash
+   ssh pi@localhost -p 20002
+```
+7. pi@grange4 (grange_5_column4 & grange_3_column5)
+
+```bash
+   ssh pi@localhost -p 20004
+```
+
+8. pi@grange5 (grange_4_column6)
+
+```bash
+   ssh pi@localhost -p 20005
+```
