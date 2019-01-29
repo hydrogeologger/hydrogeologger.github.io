@@ -25,7 +25,7 @@ the pi is working as wifi router
 ```
 
 Telstra 3g usb modem is used to provide internet
-Pi zero is working as wifi router
+Pi zero is working as wifi router to provide internet to photon weather station
 
 4. hydrogeologgermini (deployed in gelita) 
 
@@ -34,7 +34,6 @@ Pi zero is working as wifi router
 ```
 Autossh is setup in Ximing's mango
 Telstra 3g usb modem is used to provide internet
-Pi zero is working as wifi router to provide internet to photon weather station
 
 5.number of ports required by each autossh
 
