@@ -38,13 +38,13 @@ For the first set, you will need to add this protocol in library (RCSwitch.cpp):
 Find out what codes your remote is sending, and hash the example codes for other types' switches in SendDemo.ino and then to modify pulselength by the following code:
 
 ```bash
-   mySwitch.setProtocol(1);
-   mySwitch.setPulseLength(306); #set pulse length
-   mySwitch.setRepeatTransmit(7); #set repeat counts
-   mySwitch.send("011101101101100000001111100111100"); #to switch A on
-   delay(1000); 
-   mySwitch.send("011101101101100000001110100111110"); #to switch A off
-   delay(1000);
+mySwitch.setProtocol(1);
+mySwitch.setPulseLength(306); #set pulse length
+mySwitch.setRepeatTransmit(7); #set repeat counts
+mySwitch.send("011101101101100000001111100111100"); #to switch A on
+delay(1000); 
+mySwitch.send("011101101101100000001110100111110"); #to switch A off
+delay(1000);
 ```
 Uploading the transmit code (SendDemo.ino) through arduino when the power socket turns into setup mode (plug in and led is flashing)
 
@@ -68,14 +68,13 @@ Set 2:
     01000011000010000000010001001111    ' ALL on
 
 ```bash
-   mySwitch.setProtocol(1);
-   mySwitch.setPulseLength(270); #set pulse length
-   mySwitch.setRepeatTransmit(7); #set repeat counts
-   mySwitch.send("01000011000010000000111101000011"); #to switch A on
-   delay(1000);
-   mySwitch.send("01000011000010000000111001000010"); #to switch A off
-   delay(1000);
-
+mySwitch.setProtocol(1);
+mySwitch.setPulseLength(270); #set pulse length
+mySwitch.setRepeatTransmit(7); #set repeat counts
+mySwitch.send("01000011000010000000111101000011"); #to switch A on
+delay(1000);
+mySwitch.send("01000011000010000000111001000010"); #to switch A off
+delay(1000);
 ```
 More details see https://www.thebackshed.com/forum/printer_friendly_posts.asp?FID=16&TID=9382
 Hardware connection can be found here https://www.sparkfun.com/datasheets/RF/KLP_Walkthrough.pdf
