@@ -22,6 +22,9 @@ Then using following to list disk partitioning functions
 fdisk -l /path/name.img
 ```
 E.g root@osboxes:/home/osboxes# fdisk -l /media/sf_H_DRIVE/2018-05-30-pi3-hydrogeologger.img
+
+More details see https://raspberrypi.stackexchange.com/questions/13137/how-can-i-mount-a-raspberry-pi-linux-distro-image
+
 ### Configuring a static IP
 
 We are configuring a standalone network to act as a server, so the Raspberry Pi needs to have a static IP address assigned to the wireless port. This documentation assumes that we are using the standard 192.168.x.x IP addresses for our wireless network, so we will assign the server the IP address 192.168.4.1. It is also assumed that the wireless device being used is `wlan0`.
