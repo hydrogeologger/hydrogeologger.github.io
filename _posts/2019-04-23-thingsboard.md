@@ -1,7 +1,11 @@
 ---
 layout: post
-title: this is Wenqiang's first trial
+title: thingsboard
 ---
+
+
+The reason I have created this thread is because thingsboard stopped to function in April 2019. I believe there are several reasons
+1. cassandra is eating a lot of memories. from emails 
 
 ## 190421
 ```
@@ -16,6 +20,7 @@ debian@uqgec:~$ sudo su
 root@uqgec:/home/debian# vi /etc/init.d/thingsboard
 ```
 
+```
 root@uqgec:/var/log/thingsboard# ls
 gc.log.0                  install.log                   thingsboard.2019-03-10.1.log  thingsboard.2019-03-17.0.log  thingsboard.2019-03-23.0.log
 gc.log.0.current          thingsboard.2019-03-04.0.log  thingsboard.2019-03-11.0.log  thingsboard.2019-03-18.0.log  thingsboard.2019-03-24.0.log
@@ -31,9 +36,10 @@ gc.log.9                  thingsboard.2019-03-09.1.log  thingsboard.2019-03-15.0
 install.2018-09-26.0.log  thingsboard.2019-03-10.0.log  thingsboard.2019-03-16.0.log  thingsboard.2019-03-22.0.log  thingsboard.out
 root@uqgec:/var/log/thingsboard# uptime
  03:49:37 up 18 days,  2:57,  2 users,  load average: 0.00, 0.00, 0.00
+```
 
 
-
+```
 va.lang.OutOfMemoryError: Java heap space
 2019-04-03 02:14:13,220 [nioEventLoopGroup-5-2] ERROR o.t.s.t.mqtt.MqttTransportHandler - [mqtt13] Unexpected Exception
 java.lang.OutOfMemoryError: Java heap space
@@ -41,6 +47,8 @@ java.lang.OutOfMemoryError: Java heap space
 java.lang.OutOfMemoryError: Java heap space
 2019-04-03 04:58:19,152 [nioEventLoopGroup-5-7] ERROR o.t.s.t.mqtt.MqttTransportHandler - [mqtt17] Unexpected Exception
 java.lang.OutOfMemoryError: Java heap space
+```
+
 
 
 
@@ -280,3 +288,180 @@ ThingsBoard upgrade failed!
 ```
 
 
+### casandra is considered to memory eating. as a normal cassandra will require at least 8G.
+```
+systemctl status cassandra
+systemctl status mysql   # wordpress can only be running when there is mysql
+
+```
+
+
+
+
+```
+root@uqgec:/var/log/thingsboard# systemctl start cassandra
+root@uqgec:/var/log/thingsboard# htop
+root@uqgec:/var/log/thingsboard# nodetool cfstats
+error: org.apache.cassandra.db:type=StorageProxy
+-- StackTrace --
+javax.management.InstanceNotFoundException: org.apache.cassandra.db:type=StorageProxy
+        at com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.getMBean(DefaultMBeanServerInterceptor.java:1095)
+        at com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.getAttribute(DefaultMBeanServerInterceptor.java:643)
+        at com.sun.jmx.mbeanserver.JmxMBeanServer.getAttribute(JmxMBeanServer.java:678)
+        at javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1445)
+        at javax.management.remote.rmi.RMIConnectionImpl.access$300(RMIConnectionImpl.java:76)
+        at javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1309)
+        at javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1401)
+        at javax.management.remote.rmi.RMIConnectionImpl.getAttribute(RMIConnectionImpl.java:639)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:357)
+        at sun.rmi.transport.Transport$1.run(Transport.java:200)
+        at sun.rmi.transport.Transport$1.run(Transport.java:197)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+        at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:573)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:835)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:688)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:687)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+        at java.lang.Thread.run(Thread.java:748)
+        at sun.rmi.transport.StreamRemoteCall.exceptionReceivedFromServer(StreamRemoteCall.java:283)
+        at sun.rmi.transport.StreamRemoteCall.executeCall(StreamRemoteCall.java:260)
+        at sun.rmi.server.UnicastRef.invoke(UnicastRef.java:161)
+        at com.sun.jmx.remote.internal.PRef.invoke(Unknown Source)
+        at javax.management.remote.rmi.RMIConnectionImpl_Stub.getAttribute(Unknown Source)
+        at javax.management.remote.rmi.RMIConnector$RemoteMBeanServerConnection.getAttribute(RMIConnector.java:903)
+        at javax.management.MBeanServerInvocationHandler.invoke(MBeanServerInvocationHandler.java:273)
+        at com.sun.proxy.$Proxy13.getNumberOfTables(Unknown Source)
+        at org.apache.cassandra.tools.NodeProbe.getNumberOfTables(NodeProbe.java:1301)
+        at org.apache.cassandra.tools.nodetool.stats.TableStatsHolder.<init>(TableStatsHolder.java:40)
+        at org.apache.cassandra.tools.nodetool.TableStats.execute(TableStats.java:56)
+        at org.apache.cassandra.tools.NodeTool$NodeToolCmd.run(NodeTool.java:255)
+        at org.apache.cassandra.tools.NodeTool.main(NodeTool.java:169)
+
+```
+
+when i used nodetool cfstats, there is no thingsboard available 
+
+
+and actually when i checked thingsboard.yml
+
+
+
+```
+postgres=# SELECT pg_size_pretty( pg_database_size('thingsboard') );
+ pg_size_pretty 
+----------------
+ 6532 kB
+(1 row)
+```
+```
+thingsboard=# SHOW
+thingsboard-# \SHOW
+Invalid command \SHOW. Try \? for help.
+thingsboard-# \?
+thingsboard-# \dt
+No relations found.
+thingsboard-# \q
+postgres@uqgec:~$ psql
+psql (9.4.19)
+Type "help" for help.
+
+postgres=# \dt
+No relations found.
+postgres=# \l
+                                   List of databases
+    Name     |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges   
+-------------+----------+----------+-------------+-------------+-----------------------
+ postgres    | postgres | UTF8     | en_AU.UTF-8 | en_AU.UTF-8 | 
+ template0   | postgres | UTF8     | en_AU.UTF-8 | en_AU.UTF-8 | =c/postgres          +
+             |          |          |             |             | postgres=CTc/postgres
+ template1   | postgres | UTF8     | en_AU.UTF-8 | en_AU.UTF-8 | =c/postgres          +
+             |          |          |             |             | postgres=CTc/postgres
+ thingsboard | postgres | UTF8     | en_AU.UTF-8 | en_AU.UTF-8 | 
+(4 rows)
+
+postgres=# \c thingsboard
+You are now connected to database "thingsboard" as user "postgres".
+thingsboard=# \l
+                                   List of databases
+    Name     |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges   
+-------------+----------+----------+-------------+-------------+-----------------------
+ postgres    | postgres | UTF8     | en_AU.UTF-8 | en_AU.UTF-8 | 
+ template0   | postgres | UTF8     | en_AU.UTF-8 | en_AU.UTF-8 | =c/postgres          +
+             |          |          |             |             | postgres=CTc/postgres
+ template1   | postgres | UTF8     | en_AU.UTF-8 | en_AU.UTF-8 | =c/postgres          +
+             |          |          |             |             | postgres=CTc/postgres
+ thingsboard | postgres | UTF8     | en_AU.UTF-8 | en_AU.UTF-8 | 
+(4 rows)
+
+thingsboard=# \dt
+No relations found.
+thingsboard=# \dt *.*
+
+```
+
+below is good enough to check if netstat is connected
+netstat -lpnt |grep 2000
+
+
+i face the following error
+
+unsupported major.mior version 52 in debian
+
+solution is to install openjdk 8
+
+```
+debian@uqgec:~$ nodetool -h localhost -p 7199 snapshot thingsboard
+Requested creating snapshot(s) for [thingsboard] with snapshot name [1556107943439] and options {skipFlush=false}
+error: Keyspace thingsboard does not exist
+-- StackTrace --
+java.io.IOException: Keyspace thingsboard does not exist
+        at org.apache.cassandra.service.StorageService.getValidKeyspace(StorageService.java:3261)
+        at org.apache.cassandra.service.StorageService.takeSnapshot(StorageService.java:3178)
+        at org.apache.cassandra.service.StorageService.takeSnapshot(StorageService.java:3099)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at sun.reflect.misc.Trampoline.invoke(MethodUtil.java:71)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at sun.reflect.misc.MethodUtil.invoke(MethodUtil.java:275)
+        at com.sun.jmx.mbeanserver.StandardMBeanIntrospector.invokeM2(StandardMBeanIntrospector.java:112)
+        at com.sun.jmx.mbeanserver.StandardMBeanIntrospector.invokeM2(StandardMBeanIntrospector.java:46)
+        at com.sun.jmx.mbeanserver.MBeanIntrospector.invokeM(MBeanIntrospector.java:237)
+        at com.sun.jmx.mbeanserver.PerInterface.invoke(PerInterface.java:138)
+        at com.sun.jmx.mbeanserver.MBeanSupport.invoke(MBeanSupport.java:252)
+        at com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:819)
+        at com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:801)
+        at javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1468)
+        at javax.management.remote.rmi.RMIConnectionImpl.access$300(RMIConnectionImpl.java:76)
+        at javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1309)
+        at javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1401)
+        at javax.management.remote.rmi.RMIConnectionImpl.invoke(RMIConnectionImpl.java:829)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:357)
+        at sun.rmi.transport.Transport$1.run(Transport.java:200)
+        at sun.rmi.transport.Transport$1.run(Transport.java:197)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+        at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:573)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:835)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:688)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:687)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+        at java.lang.Thread.run(Thread.java:748)
+```
