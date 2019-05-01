@@ -465,3 +465,17 @@ java.io.IOException: Keyspace thingsboard does not exist
         at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
         at java.lang.Thread.run(Thread.java:748)
 ```
+
+
+
+
+
+
+cmzhang@ae429-3158 ~/Dropbox/scripts/openstack $ openstack server list 
++--------------------------------------+----------------+--------+--------------------------------------------+---------------------------------+-----------+
+| ID                                   | Name           | Status | Networks                                   | Image                           | Flavor    |
++--------------------------------------+----------------+--------+--------------------------------------------+---------------------------------+-----------+
+| a9f65d3f-8f38-437e-a928-bdaf417ee6f0 | hydrogeologger | ACTIVE | qld=203.101.226.97; qld-data=10.255.132.98 | NeCTAR Debian 9 (Stretch) amd64 | m1.medium |
+| bafeafc3-c3d0-4f21-a764-7ba59c1e6c25 | uqgec          | ACTIVE | tas=144.6.225.24                           |                                 | m2.small  |
++--------------------------------------+----------------+--------+--------------------------------------------+---------------------------------+-----------+
+
