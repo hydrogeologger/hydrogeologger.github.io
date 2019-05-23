@@ -479,3 +479,8 @@ cmzhang@ae429-3158 ~/Dropbox/scripts/openstack $ openstack server list
 | bafeafc3-c3d0-4f21-a764-7ba59c1e6c25 | uqgec          | ACTIVE | tas=144.6.225.24                           |                                 | m2.small  |
 +--------------------------------------+----------------+--------+--------------------------------------------+---------------------------------+-----------+
 
+### 20190501 thingsboard summary
+
+a. the corrupted postgres can not be restored for now no matter how i twisted the postgres database
+b. cassandra database with tb 2.3.1 seems easy to be backed up, i just need to copy /mnt/cassandra into another folder, the specific tutorial i followed is https://interset.zendesk.com/hc/en-us/articles/360001083007-How-to-change-the-default-Cassandra-data-store-directory-
+c. cassandra and image needs to be backed up on the regular basis and it is done so so far. 
