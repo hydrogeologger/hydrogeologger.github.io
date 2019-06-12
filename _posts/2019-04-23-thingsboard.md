@@ -484,3 +484,11 @@ cmzhang@ae429-3158 ~/Dropbox/scripts/openstack $ openstack server list
 a. the corrupted postgres can not be restored for now no matter how i twisted the postgres database
 b. cassandra database with tb 2.3.1 seems easy to be backed up, i just need to copy /mnt/cassandra into another folder, the specific tutorial i followed is https://interset.zendesk.com/hc/en-us/articles/360001083007-How-to-change-the-default-Cassandra-data-store-directory-
 c. cassandra and image needs to be backed up on the regular basis and it is done so so far. 
+
+
+### 20190531 writte result as a function 
+
+
+Go to chart -> data -> parameters -> tick data post-processing function
+
+also one can add decimal point to y axis
