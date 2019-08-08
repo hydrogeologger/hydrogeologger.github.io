@@ -3,7 +3,7 @@ layout: post
 title: install pywafo
 ---
 
-##1. i had a huge number of probelm in using pywafo, the following commands are the ones i used to install wafo in a debian 8
+##1. I had a huge number of problem in using pywafo, the following commands are the ones I used to install wafo in a debian 8
 
 
  {% highlight bash %}
@@ -403,9 +403,9 @@ title: install pywafo
  {% endhighlight %}
 
 
-## 2. update for installing pywafo in debian stretch
+## 2. Update for installing pywafo in debian stretch
 
-literally two commands are needed to carry out this:
+Literally two commands are needed to carry out this:
 
 ```bash
 pip install pyscaffold==2.4

@@ -7,11 +7,11 @@ title: sftp uqgec localhost port number for pi and pizero devices
 ```bash
    ssh pi@localhost -p 1992
 ```
-Telstra 3g usb modem is used to provide internet
-Pi zero is working as wifi router to provide internet for photon weather station
+Telstra 3G USB modem is used to provide Internet
+Pi zero is working as wifi router to provide Internet for photon weather station
    
 
-### hydrogeologger (the pi 3 B+ sitting on chenming's desk)
+### Hydrogeologger (the pi 3 B+ sitting on Chenming's desk)
 ```bash
    ssh pi@localhost -p 1993
 ```
@@ -24,8 +24,8 @@ the pi is working as wifi router
    ssh pi@localhost -p 20007
 ```
 
-Telstra 3g usb modem is used to provide internet
-Pi zero is working as wifi router to provide internet to photon weather station
+Telstra 3g USB modem is used to provide internet
+Pi zero is working as WiFi router to provide internet to photon weather station
 
 ### hydrogeologgermini (deployed in gelita) 
 
@@ -43,14 +43,14 @@ autossh is been called by the following command:
 AUTOSSH_DEBUG=7 autossh -M 20000 -f -o"ServerAliveInterval 6000" -o "ServerAliveCountMax 10" -o "ExitOnForwardFailure=yes" -i ~/.ssh/id_rsa_sftp_uqgec -N sftp@xxx.xx.xx.xx -R 2003:localhost:5901 -R 1992:localhost:22 -C  >>/home/pi/autossh_debug  
 ```
 
-in the host, the following ports are used for stanwell. 20000,20001, 2003,1992
+In the host, the following ports are used for Stanwell. 20000,20001, 2003,1992
 
-so the next system should be configured as
+So the next system should be configured as
 
 ```bash
 AUTOSSH_DEBUG=7 autossh -M 20002 -f -o"ServerAliveInterval 6000" -o "ServerAliveCountMax 10" -o "ExitOnForwardFailure=yes" -i ~/.ssh/id_rsa_sftp_uqgec -N sftp@xxx.xx.xx.xx -R 2004:localhost:5901 -R 1993:localhost:22 -C  >>/home/pi/autossh_debug  
 ```
-the following ports are used for stanwell. 20002,20003, 2004,1993
+the following ports are used for Stanwell. 20002,20003, 2004,1993
 
 ### pi@grange1 (grange_type_b)
 
