@@ -411,3 +411,6 @@ Literally two commands are needed to carry out this:
 pip install pyscaffold==2.4
 pip install wafo==0.3.1
 ```
+
+
+## 3. pywafo is now merged into pyduino. no need to install pywafo anymore
