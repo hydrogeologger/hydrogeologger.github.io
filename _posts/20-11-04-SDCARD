@@ -1,0 +1,73 @@
+---
+layout: post
+title: ISSUES RELATED TO SD CARD BACKUP AND BURNING
+---
+
+### 201104-How to mount a partition of a image (img) file to a directory for editing done with Zicheng
+
+#### Reference: https://askubuntu.com/questions/69363/mount-single-partition-from-image-of-entire-disk-device
+
+#### 1. Need to check the starting point of a partition
+
+```
+fdisk -l 2018-05-30-pi3-hydrogeologger_mini_for_zero_corrected.img
+
+root@ae429-3158:/home/chenming/Downloads# fdisk -l 2018-05-30-pi3-hydrogeologger_mini_for_zero_corrected.img
+Disk 2018-05-30-pi3-hydrogeologger_mini_for_zero_corrected.img: 14.9 GiB, 15931539456 bytes, 31116288 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x000181ed
+
+Device                                                     Boot   Start      End  Sectors  Size Id Type
+2018-05-30-pi3-hydrogeologger_mini_for_zero_corrected.img1         8192  3275390  3267199  1.6G  e W95 FAT16 (LBA)
+2018-05-30-pi3-hydrogeologger_mini_for_zero_corrected.img2      3275391 31115263 27839873 13.3G  5 Extended
+2018-05-30-pi3-hydrogeologger_mini_for_zero_corrected.img5      3276800  3342333    65534   32M 83 Linux
+2018-05-30-pi3-hydrogeologger_mini_for_zero_corrected.img6      3342336  3483647   141312   69M  c W95 FAT32 (LBA)
+2018-05-30-pi3-hydrogeologger_mini_for_zero_corrected.img7      3489792 31113215 27623424 13.2G 83 Linux
+
+```
+ 
+User needs to be aware that img2 is extended partition where multiple partitions are inside. So img2 is not the image that needs to be mounted. Instead, img7 is the image that contains files. 
+ 
+ 
+ 200812 Now I face a new issue which is that once i compile everything and produeced a binary file, the outcome is segmentation fault when i run the program.
+ 
+#### 2.	Need to calculate the starting point of img7, which is done by 512 x  3489792  = 1786773504
+
+#### 3.	Issue the following command as root to mount the image to a folder:
+
+```
+mount -o loop,offset=1786773504 2018-05-30-pi3-hydrogeologger_mini_for_zero_corrected.img /home/cmzhang/usb
+```
+
+#### 4.	Be aware that /home/cmzhang/usb/home/pi is owned by a normal user, so please use normal user to make changes in the folder.
+
+### How to burn a midi-sd card to a img file without storing the empty spaces
+
+
+
+#### 1.	Run gparted as root and check the size of the sd card. Shrink the partition to a reasonable size to contain the existing files. 
+#### 2.	Run
+
+```
+dd bs=1M if=/dev/sdc of=/home/chenming/181108_rpi3_stretch_count8000_1M_wifieduroam_noserial.img count=8000. The img file size would be 8GB because of 1M*8000 =8GB. Also notice that the size of the shrunk partition in the card needs to be less than 8GB.
+```
+
+#### 3.	When the command prompt is not freezing, issue sync to complete the burning of the image.
+
+### How to burn a small img file to a sd card with larger volume.
+This is to follow the previous topic where a img file with a reduced file was created. However, after the burning, the size of the partition that contains files would only be the same as the size of the img file, meaning the rest of available space in the sd card can not be assessed. 
+#### 1.	Insert a new mini-sd card and run:
+```
+dd if = 181108_rpi3_stretch_count8000_1M_wifieduroam_noserial.img of=/dev/sdx  
+```
+
+where x needs to be identified by fdisk -l.
+
+
+#### 2.	Also issue sync when the command prompt is stopped freezing.
+
+####3.	Run gparted as root to expand the partition that contains file to the full size of the sd card.
+
