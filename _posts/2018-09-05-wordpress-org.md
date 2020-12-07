@@ -3,7 +3,7 @@ layout: post
 title: installing wordpress on aliyun
 ---
 
-# 1. ali yun install for wordpress 2018-09-05 10:35 
+## 1. ali yun install for wordpress 2018-09-05 10:35 
 install required software
 
  {% highlight bash %}
@@ -64,7 +64,7 @@ https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-on-deb
 
 
 
-# 2. the password for root in mysql is lost
+## 2. the password for root in mysql is lost
 
 https://stackoverflow.com/questions/41645309/mysql-error-access-denied-for-user-rootlocalhost
 
@@ -81,3 +81,58 @@ mysql -u root -p
 
 
 second, the 
+
+## 3. error occurred during updating debian from 8 to 10
+
+  first of all, to update debian, one has to upload one by one, from 8 to 9 then 9 to 10. I managed to use sury source to install php. however, the folloing script needs to be changed to allow the new sites to be able to be viewed by apache2: 
+  
+  in /etc/apache2/apache2.conf
+  
+hash 
+
+```
+#<Directory />
+#       Options FollowSymLinks
+#       AllowOverride None
+#       Require all denied
+#</Directory>
+```
+
+
+and add
+
+
+```
+<Directory />
+         Require all granted
+</Directory>
+
+```
+
+
+reference: https://stackoverflow.com/questions/8413042/client-denied-by-server-configuration/12286673
+
+## 3. error "Your PHP installation appears to be missing the MySQL extension which is required by WordPress." 201207
+
+
+```
+apt-get install php7.3-common php7.3-mysql
+service apache2 restart
+```
+
+## 3. error where copying wp image from one site to another site kept the ip address of the old site. 201207
+
+
+add the following line to 2p-config.php
+
+```
+
+define( 'WP_HOME', 'http://123.456.78.90/wp' );
+define( 'WP_SITEURL', 'http://123.456.78.90/wp' );
+
+```
+
+if there is no secured connection use http. 123.456.78.90 is the new site name
+
+Now i can enjoy woocommerce
+
